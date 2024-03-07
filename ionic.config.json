@@ -1,0 +1,7 @@
+{
+  "name": "Mi_Agenda",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
