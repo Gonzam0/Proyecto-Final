@@ -1,0 +1,41 @@
+<ion-content>
+  <app-header></app-header>
+  <app-logo></app-logo>
+
+  <h2 class="ion-text-center ion-no-margin">Login</h2>
+
+  <div class="content">
+    <div class="d-flex-center">
+      <form (keyup.enter)="submit()" (ngSubmit)="submit()" class="ion-text-center">
+        <app-custom-input autocomplete="email" [control]="form.controls.email" type="email" label="Correo"
+          icon="mail-outline"></app-custom-input>
+
+        <!--====ERRORES EMAIL====-->
+        <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.dirty">
+          <div *ngIf="form.controls.email.errors?.['required']">Ingrese su correo</div>
+          <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</div>
+        </div>
+
+        <app-custom-input [control]="form.controls.password" type="password" label="Contraseña"
+          icon="lock-closed-outline"></app-custom-input>
+
+        <!--====ERRORES CONTRASEÑA====-->
+        <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.dirty">
+          <div *ngIf="form.controls.password.errors?.['required']">Ingrese su contraseña</div>
+        </div>
+
+        <ion-button class="ion-margin-vertical" [disabled]="form.invalid" type="submit" shape="round">
+          Acceder
+          <ion-icon slot="end" name="log-in-outline"></ion-icon>
+        </ion-button>
+        <div class="sing-up">
+          <div>¿No tienes cuenta?</div>
+          <ion-button routerLink="sign-up" class="ion-margin-vertical" shape="round">
+            Registrate
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

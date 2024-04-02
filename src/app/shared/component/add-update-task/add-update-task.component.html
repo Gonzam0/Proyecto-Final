@@ -1,0 +1,62 @@
+<ion-content color="light">
+<app-header [isModal]="true" [title]="task? 'Tarea' : 'Nueva Tarea'" color="light" [centerTitle]="true"></app-header>
+
+ <!--====INPUT TITULO====-->
+ <app-custom-input [control]="form.controls.title" type="text" label="Título"></app-custom-input>
+
+ <!--====ERRORES TITULO====-->
+ <div class="validators" *ngIf="form.controls.title.errors && form.controls.title.dirty">
+   <div *ngIf="form.controls.title.errors?.['required']">Ingrese el título de la tarea</div>
+   <div *ngIf="form.controls.title.errors?.['minlength']">Necesita tener al menos 3 caracteres</div>
+ </div>
+
+  <!--====INPUT DESCRIPCION====-->
+  <app-custom-input [control]="form.controls.description" type="textarea" label="Descripción"></app-custom-input>
+
+  <!--====ERRORES DESCRIPCION====-->
+  <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.dirty">
+    <div *ngIf="form.controls.description.errors?.['required']">Ingrese la descripción de la tarea</div>
+    <div *ngIf="form.controls.description.errors?.['minlength']">Necesita tener al menos 5 caracteres</div>
+  </div>
+
+  <ion-item class="item-header" lines="none">
+    <ion-label>Actividades</ion-label>
+    <span slot="end" *ngIf="form.value.items.length">
+      Progreso: {{ getPercentage() }}%
+    </span>
+    <ion-button (click)="createItem()" slot="end" mode="ios">
+      Añadir Act.<ion-icon slot="start" name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-range [value]="getPercentage()"></ion-range>
+      <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+
+        <div *ngFor="let item of form.value.items; index as i">
+          <ion-item lines="none">
+            <ion-checkbox slot="start" color="success" [(ngModel)]="item.completed"></ion-checkbox>
+            <ion-label class="ion-text-wrap"> 
+            {{ item.name }} 
+            </ion-label>
+  
+            <ion-buttons slot="end">
+              <ion-button (click)="removeItem(i)">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+
+          <ion-item class="item-reorder">
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+        </div>
+      </ion-reorder-group>
+      
+</ion-content>
+<ion-footer>
+  <div class="ion-text-center">
+    <ion-button class="ion-margin" mode="ios" [disabled]="form.invalid" (click)="submit()" shape="round">
+      {{task? 'Guardar Cambios' : 'Crear Tarea'}}
+    </ion-button>
+  </div>
+</ion-footer>
