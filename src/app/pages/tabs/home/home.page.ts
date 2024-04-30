@@ -11,10 +11,11 @@ import { AddUpdateTaskComponent } from 'src/app/shared/component/add-update-task
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
+  
   tasks: Task[] = []
   user = {} as User
-  loading: boolean= false
+  loading: boolean = false
+  searchText: string = ''
 
   constructor(
     private firebaseSvc: FirebaseService,
@@ -24,7 +25,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-getUser(){
+  getUser() {
     return this.user = this.utilSvc.getElementFromLocalStorage('user')
   }
 
@@ -33,14 +34,14 @@ getUser(){
     this.getUser()
   }
 
-  getPercentage(task: Task){
+  getPercentage(task: Task) {
     return this.utilSvc.getPercentage(task)
   }
 
-  async addOrUpdateTask(task?: Task){
+  async addOrUpdateTask(task?: Task) {
     let res = await this.utilSvc.presentModal({
       component: AddUpdateTaskComponent,
-      componentProps: {task},
+      componentProps: { task },
       cssClass: 'add-update-modal'
     })
 
@@ -49,7 +50,7 @@ getUser(){
     }
   }
 
-  getTasks(){
+  getTasks() {
     let user: User = this.utilSvc.getElementFromLocalStorage('user')
     let path = `users/${user.uid}`
     this.loading = true
@@ -64,7 +65,7 @@ getUser(){
     })
   }
 
-  confirmDeleteTask(task: Task){
+  confirmDeleteTask(task: Task) {
     this.utilSvc.presentAlert({
       header: 'Eliminar tarea',
       message: '¿Quieres eliminar la tarea?',
@@ -83,31 +84,43 @@ getUser(){
     })
   }
 
-  deleteTask(task: Task){
+  deleteTask(task: Task) {
     let path = `users/${this.user.uid}/tasks/${task.id}`
 
-    this.utilSvc.presentLoading({message: 'Borrando actividad...'});
+    this.utilSvc.presentLoading({ message: 'Borrando actividad...' });
 
     this.firebaseSvc.deleteDocument(path).then(res => {
 
       this.utilSvc.presentToast({
-        message: 'Tarea eliminada', 
-        duration: 2500, 
-        color: 'success', 
+        message: 'Tarea eliminada',
+        duration: 2500,
+        color: 'success',
         icon: 'checkmark-circle-outline'
       })
 
       this.getTasks()
       this.utilSvc.dismissLoading()
     }, error => {
-      
+
       this.utilSvc.presentToast({
-        message: error, 
-        duration: 3500, 
-        color: 'warning', 
+        message: error,
+        duration: 3500,
+        color: 'warning',
         icon: 'alert-circle-outline'
       })
 
     })
   }
+
+  filterTasks() {
+    if (!this.searchText.trim()) {
+      return this.tasks;
+    }
+  
+    return this.tasks.filter(task => 
+      task.title.toLowerCase().startsWith(this.searchText.toLowerCase())
+    );
+  }
+  
+  
 }

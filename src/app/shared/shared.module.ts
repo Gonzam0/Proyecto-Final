@@ -16,7 +16,7 @@ import { AddUpdateTaskComponent } from './component/add-update-task/add-update-t
     HeaderComponent,
     CustomInputComponent,
     LogoComponent,
-    AddUpdateTaskComponent
+    AddUpdateTaskComponent,
   ],
   exports: [
     HeaderComponent,

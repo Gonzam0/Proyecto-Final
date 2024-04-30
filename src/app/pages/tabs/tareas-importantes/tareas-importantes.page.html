@@ -1,0 +1,16 @@
+<ion-content [fullscreen]="true">
+  <app-header title="Tareas Importantes"></app-header>
+
+  <div class="content">
+
+
+
+    <!--===== NO TAREAS =====-->
+    <ion-row *ngIf="!loading && !tasks.length">
+      <ion-col class="empty" size="12">
+        <ion-icon name="star-half-outline"></ion-icon>
+        <h4>No tienes tareas importantes</h4>
+        </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

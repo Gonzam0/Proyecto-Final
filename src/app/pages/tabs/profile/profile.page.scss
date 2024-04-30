@@ -4,4 +4,12 @@
 
 iob-button{
     margin-top: 50px;
-}
+}  
+  .edit-overlay ion-icon {
+    pointer-events: none; /* Evitar que el icono de edición interrumpa eventos del ratón */
+  }
+  
+  .content:hover .edit-overlay {
+    visibility: visible; /* Mostrar cuando el ratón está sobre el contenido */
+  }
+  
