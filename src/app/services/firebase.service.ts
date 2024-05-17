@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { User } from '../models/user.model';
+import { Users } from '../models/user.model';
 import { getAuth, updateProfile } from "firebase/auth";
 import { UtilsService } from './utils.service';
 
@@ -17,12 +17,12 @@ export class FirebaseService {
   ) { }
 
   //=====AUTENTIFICAR USUARIO=====
-  login(user: User) {
+  login(user: Users) {
     return this.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
   //=====REGISTRAR USUARIO=====
-  signup(user: User) {
+  signup(user: Users) {
     return this.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 
@@ -54,6 +54,11 @@ export class FirebaseService {
     return this.db.doc(path).collection(subCollectionName).add(object);
   }
 
+  //=====Añadir datos de un usuario=====
+  setDocument(path: string, subCollectionName: string, object: any) {
+    return this.db.doc(path).collection(subCollectionName).add(object);
+  }
+
   //=====Actualizar tareas de un usuario=====
   updateDocument(path: string, object: any) {
     return this.db.doc(path).update(object);
@@ -63,4 +68,7 @@ export class FirebaseService {
   deleteDocument(path: string) {
     return this.db.doc(path).delete();
   }
+
+  //=====Guardar usuario en Firestore=====
+ 
 }

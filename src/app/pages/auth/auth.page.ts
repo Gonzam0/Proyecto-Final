@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user.model';
+import { Users } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -27,14 +27,15 @@ export class AuthPage implements OnInit {
   submit() {
     if (this.form.valid) {
       this.utilSvc.presentLoading({message: 'Autenticando...'});
-      this.firebaseSvc.login(this.form.value as User).then(async res => {
+      this.firebaseSvc.login(this.form.value as Users).then(async res => {
 
-        let user: User = {
+        let user: Users = {
           uid: res.user.uid,
           name: res.user.displayName,
-          email: res.user.email
+          email: res.user.email,
+          rol: 'basico'
         }
-
+        
         this.utilSvc.setElementInLocalStorage('user', user);
         this.utilSvc.routerLink('/tabs/home');
 

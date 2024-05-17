@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'firebase/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { User} from 'firebase/auth';
+import { Users } from 'src/app/models/user.model';
 import { Task } from 'src/app/models/task.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -16,10 +18,11 @@ export class HomePage implements OnInit {
   user = {} as User
   loading: boolean = false
   searchText: string = ''
-
+  
   constructor(
     private firebaseSvc: FirebaseService,
-    private utilSvc: UtilsService
+    private utilSvc: UtilsService,
+    private db: AngularFirestore
   ) { }
 
   ngOnInit() {
@@ -89,7 +92,7 @@ export class HomePage implements OnInit {
 
     this.utilSvc.presentLoading({ message: 'Borrando actividad...' });
 
-    this.firebaseSvc.deleteDocument(path).then(res => {
+    this.db.doc(path).update({ active: false }).then(res => {
 
       this.utilSvc.presentToast({
         message: 'Tarea eliminada',
@@ -112,15 +115,42 @@ export class HomePage implements OnInit {
     })
   }
 
+  addFavorite(task: Task) {
+    let path = `users/${this.user.uid}/tasks/${task.id}`
+
+    this.utilSvc.presentLoading({ message: 'Añadiendo actividad a favorita...' });
+
+    this.db.doc(path).update({ tipo: "favorite" }).then(res => {
+
+      this.utilSvc.presentToast({
+        message: 'Tarea añadida a favorita',
+        duration: 2500,
+        color: 'success',
+        icon: 'checkmark-circle-outline'
+      })
+
+      this.getTasks()
+      this.utilSvc.dismissLoading()
+    }, error => {
+
+      this.utilSvc.presentToast({
+        message: error,
+        duration: 3500,
+        color: 'warning',
+        icon: 'alert-circle-outline'
+      })
+
+    })
+  }
+
   filterTasks() {
     if (!this.searchText.trim()) {
-      return this.tasks;
+      return this.tasks.filter(task => task.active/*&&task.tipo!="favorite"*/);
     }
   
     return this.tasks.filter(task => 
-      task.title.toLowerCase().startsWith(this.searchText.toLowerCase())
+      task.title.toLowerCase().startsWith(this.searchText.toLowerCase()) && task.active/* && task.tipo!="favorite"*/
     );
   }
-  
   
 }

@@ -46,6 +46,16 @@
                       <ion-icon slot="end" name="trash-outline"></ion-icon>
                     </ion-button>
                   </div>
+                  <div class="ion-text-center">
+                    <ion-button (click)="addFavorite(task)" class="task-btn" expand="task-btn" color="tertiary" size="small">
+                      Tarea Importante
+                      <ion-icon slot="end" name="star"></ion-icon>
+                    </ion-button>
+                  </div>
+                  <div class="ion-text-right">
+                    <!-- Suponiendo que task.date es un objeto Date -->
+                    <h6>{{ task.date }}</h6>
+                  </div>
                 </ion-col>
               </ion-row>
             </ion-grid>

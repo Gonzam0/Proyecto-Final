@@ -2,7 +2,10 @@ export interface Task{
     id: string
     title: string
     description: string,
-    items: Item[]
+    items: Item[],
+    date: string,
+    active: boolean,
+    tipo: string
 }
 
 export interface Item{

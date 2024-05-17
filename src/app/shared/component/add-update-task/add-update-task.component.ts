@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ItemReorderEventDetail } from '@ionic/angular';
 import { Item, Task } from 'src/app/models/task.model';
-import { User } from 'src/app/models/user.model';
+import { Users } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -14,13 +14,24 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class AddUpdateTaskComponent  implements OnInit {
 
   @Input() task: Task;
-  user = {} as User;
+  user = {} as Users;
+
+  //=====FECHA ACTUAL====
+  today = new Date();
+  year = this.today.getFullYear();
+  month = String(this.today.getMonth() + 1).padStart(2, '0');
+  day = String(this.today.getDate()).padStart(2, '0');
+
+  currentDate = `${this.day}-${this.month}-${this.year}`;
 
   form = new FormGroup({
     id:new FormControl(''),
     title:new FormControl('', [Validators.required, Validators.minLength(3)]),
     description:new FormControl('', [Validators.required, Validators.minLength(3)]),
     items:new FormControl([], [Validators.required, Validators.minLength(1)]),
+    date:new FormControl(this.currentDate),
+    active:new FormControl(true),
+    tipo:new FormControl('estandar')
   })
   constructor(
     private firebaseSvc: FirebaseService,
