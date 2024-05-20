@@ -1,7 +1,5 @@
 {
-  "name": "Mi_Agenda",
-  "integrations": {
-    "capacitor": {}
-  },
+  "name": "New Ionic App",
+  "integrations": {},
   "type": "angular"
 }
