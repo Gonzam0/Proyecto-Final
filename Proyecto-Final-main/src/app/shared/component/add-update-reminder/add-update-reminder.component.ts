@@ -26,8 +26,8 @@ export class AddUpdateReminderComponent implements OnInit {
   today = `${this.year}-${this.month}-${this.day}`;
 
   form = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    title: new FormControl('', [Validators.required, Validators.minLength(3), this.noSpecialCharacters]),
+    description: new FormControl('', [Validators.required, Validators.minLength(3), this.noSpecialCharacters]),
     remindTime: new FormControl('', [Validators.required, Validators.minLength(9), this.dateFormatValidator()]),
     remindHour: new FormControl('', [Validators.required,  this.timeValidator()]),
   });
@@ -96,6 +96,14 @@ export class AddUpdateReminderComponent implements OnInit {
 
       return null;
     };
+  }
+
+  noSpecialCharacters(control: FormControl): { [key: string]: any } | null {
+    const value = control.value;
+    if (/[^a-zA-Z\s]| {2,}/.test(value)) { // Verifica si hay caracteres especiales que no sean letras o más de un espacio consecutivo
+      return { noSpecialCharacters: true }; // Devuelve un error
+    }
+    return null; // No hay error
   }
 
   constructor(

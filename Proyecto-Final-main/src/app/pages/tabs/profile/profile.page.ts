@@ -5,6 +5,7 @@ import { deleteUser, getAuth } from 'firebase/auth';
 import { collection, deleteDoc, doc, getDoc, getDocs } from 'firebase/firestore';
 import { Achievement } from 'src/app/models/achievements.model';
 import { User } from 'src/app/models/user.model';
+import { User as FirebaseAuthUser } from '@firebase/auth-types';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -207,34 +208,41 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  deleteAccount() {
+  async deleteAccount() {
+
     const auth = getAuth();
     const userAuth = auth.currentUser;
-    console.log(userAuth)
-    const path = `users/${this.user.uid}/`
+    const userId = userAuth.uid;
+    const path = `users/${userId}/info`
 
-    //Borrar usuario de Auth
-    //deleteUser(userAuth)
 
-    //Borrar usuario de Firestore
-    const userDoc = doc(this.db.firestore, path);
-    deleteDoc(userDoc).then(() => {
-      this.utilSvc.presentToast({
-        message: 'Cuenta eliminada',
-        duration: 2500,
-        color: 'success',
-        icon: 'checkmark-circle-outline'
-      })
+    const userDoc = doc(this.db.firestore, 'users', userId);
+    deleteDoc(userDoc)
 
-      this.firebaseSvc.deleteSubCollection(path, 'tasks')
-      this.firebaseSvc.deleteSubCollection(path, 'info')
-      this.firebaseSvc.deleteSubCollection(path, 'reminders')
-      
-      this.utilSvc.routerLink('/sign-up');
+    this.utilSvc.presentToast({
+      message: 'Cuenta eliminada',
+      duration: 2500,
+      color: 'success',
+      icon: 'checkmark-circle-outline'
     })
 
-    //localStorage.removeItem('user');
+    try {
+    
+    deleteDoc(doc(this.db.firestore, path, this.user.name));
+    deleteDoc(doc(this.db.firestore, 'users', userId));
 
+    } catch (e) {
+      console.error("Error deleting document: ", e);
+    }
+
+    //Borrar usuario de Auth
+    deleteUser(userAuth).then(() => {
+      console.log('User deleted successfully');
+    }).catch((error) => {
+      console.error('Error deleting user:', error);
+    })
+    
+    this.firebaseSvc.singOut()
   }
-
+  
 }

@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
   title: string
   photoAchievement: string
   rol: string
+  seeReminders: boolean = false
 
   constructor(
     private firebaseSvc: FirebaseService,
@@ -73,14 +74,15 @@ export class HomePage implements OnInit {
     let res = await this.utilSvc.presentModal({
       component: AddUpdateTaskComponent,
       componentProps: { task },
-      cssClass: 'add-update-modal'
+      cssClass: 'add-update-modal',
+      backdropDismiss: false
     })
 
     if (res && res.success) {
       this.getTasks()
     }
 
-    if (this.tasks.length == 1) {
+    if (this.tasks.length == 0) {
 
       //Obtiene los datos del logro
       this.firebaseSvc.getData1Collection('achievements ', '1', 'title').subscribe(res => {
@@ -177,43 +179,44 @@ export class HomePage implements OnInit {
   }
 
   showReminder() {
-
     const now = new Date();
     const currentDay = String(now.getDate()).padStart(2, '0');
     const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
     const currentYear = now.getFullYear();
     const currentHours = String(now.getHours()).padStart(2, '0');
     const currentMinutes = String(now.getMinutes()).padStart(2, '0');
-
+  
     const currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
     const currentTime = `${currentHours}:${currentMinutes}`;
-
+  
     this.currentReminder = this.reminders.find(reminder => {
       const reminderDate = reminder.remindTime;
       const reminderTime = reminder.remindHour;
-
+  
       return reminderDate === currentDate && reminderTime === currentTime;
     });
-
+  
     if (this.currentReminder) {
       console.log('Recordatorio actual:', this.currentReminder);
-      this.utilSvc.presentAlert({
-        header: 'Recordatorio',
-        message: `${this.currentReminder.title} - ${this.currentReminder.description}`,
-        mode: 'ios',
-        buttons: [
-          {
-            text: 'Ok',
-            role: 'cancel',
-          }
-        ]
-      });
+      if (!this.seeReminders) { // Solo si seeReminders es falso
+        this.utilSvc.presentAlert({
+          header: 'Recordatorio',
+          message: `${this.currentReminder.title} - ${this.currentReminder.description}`,
+          mode: 'ios',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'cancel',
+            }
+          ]
+        });
+  
+        this.seeReminders = true; // Cambia seeReminders solo cuando se muestra el recordatorio por primera vez
+      }
     } else {
       console.log('No hay recordatorios para la fecha y hora actual.');
     }
   }
-
-
 
 
   confirmDeleteTask(task: Task) {

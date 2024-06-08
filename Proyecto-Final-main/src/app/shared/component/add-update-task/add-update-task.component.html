@@ -12,6 +12,7 @@
   <!--====ERRORES GRUPO====-->
   <div class="validators" *ngIf="form.controls.group.errors && form.controls.group.dirty">
     <div *ngIf="form.controls.group.errors?.['required']">Seleccione una categoría</div>
+
   </div>
 
  <!--====INPUT TITULO====-->
@@ -21,6 +22,7 @@
  <div class="validators" *ngIf="form.controls.title.errors && form.controls.title.dirty">
    <div *ngIf="form.controls.title.errors?.['required']">Ingrese el título de la tarea</div>
    <div *ngIf="form.controls.title.errors?.['minlength']">Necesita tener al menos 3 caracteres</div>
+   <div *ngIf="form.controls.title.errors?.['noSpecialCharacters']">Introduzca un título correcto</div>
  </div>
 
   <!--====INPUT DESCRIPCION====-->
@@ -30,6 +32,7 @@
   <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.dirty">
     <div *ngIf="form.controls.description.errors?.['required']">Ingrese la descripción de la tarea</div>
     <div *ngIf="form.controls.description.errors?.['minlength']">Necesita tener al menos 5 caracteres</div>
+    <div *ngIf="form.controls.description.errors?.['noSpecialCharacters']">Introduzca una descripción correcta</div>
   </div>
 
   <ion-item class="item-header" lines="none">

@@ -34,9 +34,9 @@ export class AddUpdateTaskComponent implements OnInit {
 
   form = new FormGroup({
     id: new FormControl(''),
-    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    items: new FormControl([], [Validators.required, Validators.minLength(1)]),
+    title: new FormControl('', [Validators.required, Validators.minLength(3), this.noSpecialCharacters]),
+    description: new FormControl('', [Validators.required, Validators.minLength(5), this.noSpecialCharacters]),
+    items: new FormControl([], [Validators.required, Validators.minLength(1) ]),
     date: new FormControl(this.currentDate),
     active: new FormControl(true),
     type: new FormControl('estandar'),
@@ -59,6 +59,14 @@ export class AddUpdateTaskComponent implements OnInit {
       this.form.setValue(this.task);
       this.form.updateValueAndValidity()
     }
+  }
+
+  noSpecialCharacters(control: FormControl): { [key: string]: any } | null {
+    const value = control.value;
+    if (/[^a-zA-Z\s]| {2,}/.test(value)) { // Verifica si hay caracteres especiales que no sean letras o más de un espacio consecutivo
+      return { noSpecialCharacters: true }; // Devuelve un error
+    }
+    return null; // No hay error
   }
 
 
