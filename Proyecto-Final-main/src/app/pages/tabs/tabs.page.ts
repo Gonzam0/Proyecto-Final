@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private utilSvc: UtilsService
+  ) {}
+
+  isAdmin: boolean = false;
 
   ngOnInit() {
+    this.checkUserRole()
+  }
+
+  checkUserRole() {
+    const user = this.utilSvc.getElementFromLocalStorage('user');
+    if (user && user.rol === 'admin') {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
   }
 
 }

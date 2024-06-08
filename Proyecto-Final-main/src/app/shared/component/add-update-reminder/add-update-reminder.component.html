@@ -1,0 +1,54 @@
+<ion-content color="light">
+  <app-header [isModal]="true" [title]="reminder ? 'Actualizar Recordatorio' : 'Nuevo Recordatorio'" color="light"
+    [centerTitle]="true"></app-header>
+
+  <!--====INPUT TITULO====-->
+  <app-custom-input [control]="form.controls.title" type="text" label="Título"></app-custom-input>
+
+  <!--====ERRORES TITULO====-->
+  <div class="validators" *ngIf="form.controls.title.errors && form.controls.title.dirty">
+    <div *ngIf="form.controls.title.errors?.['required']">Ingrese el título del recordatorio</div>
+    <div *ngIf="form.controls.title.errors?.['minlength']">Necesita tener al menos 3 caracteres</div>
+  </div>
+
+  <!--====INPUT DESCRIPCION====-->
+  <app-custom-input [control]="form.controls.description" type="textarea" label="Descripción"></app-custom-input>
+
+  <!--====ERRORES DESCRIPCION====-->
+  <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.dirty">
+    <div *ngIf="form.controls.description.errors?.['required']">Ingrese la descripción del recordatorio</div>
+    <div *ngIf="form.controls.description.errors?.['minlength']">Necesita tener al menos 3 caracteres</div>
+  </div>
+
+  <!--====INPUT FECHA====-->
+  <app-custom-input [control]="form.controls.remindTime" type="text" label="Fecha (dd-mm-aaaa)"></app-custom-input>
+
+  <!--====ERRORES FECHA====-->
+  <div class="validators" *ngIf="form.controls.remindTime.errors && form.controls.remindTime.dirty">
+    <div *ngIf="form.controls.remindTime.errors?.['required']">Ingrese la fecha del recordatorio</div>
+    <div *ngIf="form.controls.remindTime.errors?.['minlength']">Ingrese una fecha correcta</div>
+    <div *ngIf="form.controls.remindTime.errors?.['invalidDateFormat']">Ingrese una fecha correcta con el formato
+      dd-mm-aaaa</div>
+    <div *ngIf="form.controls.remindTime.errors?.['invalidDateValue']">Ingrese una fecha válida</div>
+    <div *ngIf="form.controls.remindTime.errors?.['pastDate']">La fecha no puede ser anterior a hoy</div>
+  </div>
+
+  <!--====INPUT HORA====-->
+  <app-custom-input [control]="form.controls.remindHour" type="time" label="Hora"></app-custom-input>
+
+  <!--====ERRORES HORA====-->
+  <div class="validators" *ngIf="form.controls.remindHour.errors && form.controls.remindHour.dirty">
+    <div *ngIf="form.controls.remindHour.errors?.['required']">Ingrese la hora del recordatorio</div>
+    <div *ngIf="form.controls.remindHour.errors?.['invalidTimeFormat']">Ingrese una hora correcta con el formato hh:mm</div>
+    <div *ngIf="form.controls.remindHour.errors?.['pastHour']">La hora no puede ser anterior a la hora actual</div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <div class="ion-text-center">
+    <ion-button class="ion-margin" mode="ios" [disabled]="form.invalid" (click)="submit()" shape="round">
+      {{ reminder ? 'Guardar Cambios' : 'Crear Recordatorio' }}
+    </ion-button>
+  </div>
+</ion-footer>

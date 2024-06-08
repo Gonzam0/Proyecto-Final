@@ -26,38 +26,55 @@ export class AuthPage implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      this.utilSvc.presentLoading({message: 'Autenticando...'});
+      this.utilSvc.presentLoading({ message: 'Autenticando...' });
       this.firebaseSvc.login(this.form.value as User).then(async res => {
 
         let user: User = {
           uid: res.user.uid,
           name: res.user.displayName,
-          email: res.user.email,
-          rol: 'básico'
+          email: res.user.email
         }
 
+        this.firebaseSvc.getData2Collection('users', 'info', res.user.uid, res.user.displayName, 'rol').subscribe(res => {
+          console.log(res)
+          if (res != 'admin') {
+            this.utilSvc.routerLink('/tabs/home');
+          } else {
+            this.utilSvc.routerLink('/tabs/admin');
+          }
+        })
+
+
         this.utilSvc.setElementInLocalStorage('user', user);
-        this.utilSvc.routerLink('/tabs/home');
 
         this.utilSvc.dismissLoading();
 
         this.utilSvc.presentToast({
-          message: `Bienvenido ${user.name}`, 
-          duration: 2000, 
-          color: 'success', 
+          message: `Bienvenido ${user.name}`,
+          duration: 2000,
+          color: 'success',
           icon: 'person-outline'
         });
 
         this.form.reset();
       }, err => {
         this.utilSvc.dismissLoading();
+        console.error(err);
+        let errorMessage = 'Ocurrió un error al autenticar.';
+
+        if (err.code === 'auth/invalid-credential') {
+          errorMessage = 'El correo electrónico ingresado no está registrado.';
+        } else if (err.code === 'auth/invalid-credential') {
+          errorMessage = 'La contraseña o el correo electrónico ingresados son incorrectos.';
+        }
+
         this.utilSvc.presentToast({
-          message: err, 
-          duration: 4000, 
-          color: 'warning', 
+          message: errorMessage,
+          duration: 4000,
+          color: 'warning',
           icon: 'alert-circle-outline',
         });
-      })
+      });
     }
   }
 

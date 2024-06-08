@@ -1,10 +1,17 @@
-export interface User{
+export interface User{//Ponemos ? para que en el LocalStorage no haya problemas
     uid: string;
     name: string;
-    edad?: number;
+    age?: number;
     email: string;
     password?: string;//Seguridad a la hora de registrar
     photo?: string;
-    ciudad?: string;
-    rol: string;
+    city?: string;
+    rol?: string;
+    achievements?: [];
+}
+
+export interface achievements{
+  name: string,
+  description: string
+  photo?: string
 }

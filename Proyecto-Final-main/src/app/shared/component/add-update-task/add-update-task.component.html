@@ -1,6 +1,19 @@
 <ion-content color="light">
 <app-header [isModal]="true" [title]="task? 'Tarea' : 'Nueva Tarea'" color="light" [centerTitle]="true"></app-header>
 
+  <!--====SELECCION DE GRUPO====-->
+  <ion-item>
+    <ion-label>Grupo de Tarea</ion-label>
+    <ion-select [formControl]="form.controls.group" placeholder="Seleccionar Categoría">
+      <ion-select-option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!--====ERRORES GRUPO====-->
+  <div class="validators" *ngIf="form.controls.group.errors && form.controls.group.dirty">
+    <div *ngIf="form.controls.group.errors?.['required']">Seleccione una categoría</div>
+  </div>
+
  <!--====INPUT TITULO====-->
  <app-custom-input [control]="form.controls.title" type="text" label="Título"></app-custom-input>
 

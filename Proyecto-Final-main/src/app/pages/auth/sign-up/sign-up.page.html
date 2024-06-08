@@ -15,6 +15,10 @@
         <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.dirty">
           <div *ngIf="form.controls.name.errors?.['required']">Ingrese su nombre</div>
           <div *ngIf="form.controls.name.errors?.['minlength']">Ingrese un nombre válido</div>
+          <div *ngIf="form.controls.name.errors?.['containsNumbers']">El nombre no debe contener números</div>
+          <div *ngIf="form.controls.name.errors?.['noSpecialCharacters']">Ingrese su nombre real</div>
+
+
         </div>
 
         <!--====INPUT EMAIL====-->
@@ -26,12 +30,33 @@
           <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</div>
         </div>
 
+        <!--====INPUT EDAD====-->
+        <app-custom-input [control]="form.controls.age" type="number" label="Edad" icon="calendar-outline"></app-custom-input>
+
+        <!--====ERRORES EDAD====-->
+        <div class="validators" *ngIf="form.controls.age.errors && form.controls.age.dirty">
+          <div *ngIf="form.controls.age.errors?.['required']">Ingrese su edad</div>
+          <div *ngIf="form.controls.age.errors?.['ageRangeValidator']">Ingrese una edad correcta (entre 8 y 120)</div>
+        </div>
+
+        <!--====INPUT CIUDAD====-->
+        <app-custom-input [control]="form.controls.city" type="text" label="Ciudad" icon="location-outline"></app-custom-input>
+
+        <!--====ERRORES CIUDAD====-->
+        <div class="validators" *ngIf="form.controls.city.errors && form.controls.city.dirty">
+          <div *ngIf="form.controls.city.errors?.['required']">Ingrese su ciudad</div>
+          <div *ngIf="form.controls.city.errors?.['minlength']">Ingrese una ciudad válida</div>
+          <div *ngIf="form.controls.city.errors?.['containsNumbers']">La ciudad no debe contener números</div>
+          <div *ngIf="form.controls.city.errors?.['noSpecialCharacters']">Ingrese su ciudad real</div>
+        </div>
+
         <!--====INPUT CONTRASEÑA====-->
         <app-custom-input [control]="form.controls.password" type="password" label="Contraseña" icon="lock-closed-outline"></app-custom-input>
 
         <!--====ERRORES CONTRASEÑA====-->
         <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.dirty">
           <div *ngIf="form.controls.password.errors?.['required']">Ingrese su contraseña</div>
+          <div *ngIf="form.controls.password.errors?.['minlength']">Ingrese una contraseña con 6 o más caracteres</div>
         </div>
 
         <!--====INPUT CONFIRMAR CONTRASEÑA====-->
@@ -41,6 +66,7 @@
         <div class="validators" *ngIf="form.controls.confirmPassword.errors && form.controls.confirmPassword.dirty">
           <div *ngIf="form.controls.confirmPassword.errors?.['required']">Ingrese su contraseña</div>
           <div *ngIf="form.controls.confirmPassword.errors?.['noMatch']">Las contraseñas no coinciden</div>
+          <div *ngIf="form.controls.confirmPassword.errors?.['minlength']">La contraseña contiene 6 o más caracteres</div>
         </div>
 
         <ion-button class="ion-margin-vertical" [disabled]="form.invalid" type="submit" shape="round">

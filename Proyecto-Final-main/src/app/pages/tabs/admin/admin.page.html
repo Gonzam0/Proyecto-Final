@@ -1,0 +1,106 @@
+<ion-content>
+  <app-header title="ADMINISTRADOR"></app-header>
+
+  <div class="content">
+    <div class="card-columns">
+      
+      <!-- Sección de Usuarios -->
+      <ion-card class="card-container scrollable-card" *ngIf="usersVisible">
+        <ion-card-header>
+          <ion-card-title style="color: green;" class="ion-text-center">
+            Usuarios
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="fixed-elements">
+            <ion-searchbar *ngIf="usersActive" [(ngModel)]="searchText" placeholder="Buscar Usuario"></ion-searchbar>
+            <ion-button 
+              expand="full" 
+              [color]="usersActive ? 'danger' : 'primary'" 
+              (click)="mostrarUsuarios()">
+              {{ usersActive ? 'Ocultar Usuarios' : 'Mostrar todos los usuarios' }}
+            </ion-button>
+            <h3 class="ion-text-center" *ngIf="usersActive">Número de usuarios: <span style="color: goldenrod;">{{ users.length }}</span></h3>
+          </div>
+          <div class="scrollable-content" *ngIf="usersActive && users.length > 0">
+            <ion-list>
+              <ng-container *ngFor="let user of filterUsers()">
+                <ion-item *ngIf="user.name !== 'admin'">
+                  <ion-label>
+                    <h2>{{ user.name }}</h2>
+                    <p>Email: {{ user.email }}</p>
+                    <p *ngIf="user.age">Edad: {{ user.age }}</p>
+                    <p *ngIf="user.city">Ciudad: {{ user.city }}</p>
+                  </ion-label>
+                  <ion-buttons slot="end">
+                    <ion-button [color]="user.rol === 'basico' ? 'danger' : 'success'" (click)="confirmBlockUser(user)">
+                      <ion-icon [name]="user.rol === 'basico' ? 'lock-closed-outline' : 'lock-open-outline'"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-item>
+              </ng-container>
+            </ion-list>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Sección de Tareas -->
+      <ion-card class="card-container scrollable-card" *ngIf="tasksVisible">
+        <ion-card-header>
+          <ion-card-title style="color: rgb(226, 218, 53);" class="ion-text-center">
+            Tareas
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="fixed-elements">
+            <ion-searchbar *ngIf="tasksActive" [(ngModel)]="searchText" placeholder="Buscar Tarea"></ion-searchbar>
+            <ion-button 
+              expand="full" 
+              [color]="tasksActive ? 'danger' : 'primary'" 
+              (click)="mostrarTareas()">
+              {{ tasksActive ? 'Ocultar Tareas' : 'Mostrar todas las tareas' }}
+            </ion-button>
+            <h5 class="ion-text-center" *ngIf="tasksActive">Número de tareas: <span style="color: goldenrod;">{{ tasks.length }}</span></h5>
+          </div>
+          <div class="scrollable-content" *ngIf="tasksActive && tasks.length > 0">
+            <ion-list>
+              <ion-item *ngFor="let task of filterTasks()">
+                <ion-label>
+                  <h3>Creador: {{ task.userEmail }}</h3>
+                  <h2>Título: {{ task.title }}</h2>
+                  <p>Descripción: {{ task.description }}</p>
+                  <p>Date: {{ task.date }}</p>
+                  <p>Active: {{ task.active ? 'Yes' : 'No' }}</p>
+                </ion-label>
+                <ion-buttons slot="end">
+                  <ion-button color="danger" (click)="confirmDeleteTask(task)">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-button *ngIf="mostrarBotonSesion" class="center-button" (click)="signOut()" color="danger" shape="round" expand="block">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Cerrar Sesión
+    </ion-button>
+  </div>
+
+  <!--===== CARGANDO =====-->
+  <ion-row *ngIf="loading">
+    <ion-col *ngFor="let p of [1,1,1,1,1,1,1,1,1,1]" size-lg="6" size-md="6" size-sm="12" size="12">
+      <ion-card mode="ios"> 
+        <div *ngFor="let item of [1,1,1,1]">
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </div>
+        <div *ngFor="let item of [1,1,1,1]">
+          <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+        </div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

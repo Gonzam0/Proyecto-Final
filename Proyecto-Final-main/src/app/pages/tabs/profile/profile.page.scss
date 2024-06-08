@@ -1,15 +1,193 @@
-.avatar{
-    font-size: 130px;
+.content{
+  width: 100%;
+  height: 77.5; /* Altura automática según el contenido */
+  background: var(--ion-color-light);
+  color: var(--ion-color-light-contrast);
+  border-radius: 20px 20px 0 0;
+  margin-top: 5vh;
+  padding: 15px 0;
+
+  box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.35);
+  -webkit-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
 }
 
-iob-button{
-    margin-top: 50px;
-}  
-  .edit-overlay ion-icon {
-    pointer-events: none; /* Evitar que el icono de edición interrumpa eventos del ratón */
-  }
-  
-  .content:hover .edit-overlay {
-    visibility: visible; /* Mostrar cuando el ratón está sobre el contenido */
-  }
-  
+.top-right-button {
+  position: absolute;
+  top: 20vh; /* Ajusta según sea necesario */
+  right: 16px; /* Ajusta según sea necesario */
+  z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+ion-content {
+  position: relative;
+}
+
+.avatar{
+  font-size: 130px;
+}
+
+ion-avatar{
+width: 140px;
+height: 140px;
+margin: 0 auto;
+}
+
+.photo-btn{
+position: relative;
+bottom: 25px;
+}
+.user-info {
+margin-top: 20px;
+}
+
+.info-label {
+font-weight: bold;
+}
+
+.info-value {
+margin-top: 5px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: goldenrod;
+}
+
+.animated-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  background-color: inherit;
+  border-radius: 100px;
+  font-weight: 600;
+  color: greenyellow;
+  box-shadow: 0 0 0 2px greenyellow;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 24px;
+  fill: greenyellow;
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 16px;
+}
+
+.animated-button .arr-2 {
+  left: -25%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #212121;
+  border-radius: 12px;
+}
+
+.animated-button:hover .arr-1 {
+  right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 16px;
+}
+
+.animated-button:hover .text {
+  transform: translateX(12px);
+}
+
+.animated-button:hover svg {
+  fill: #212121;
+}
+
+.animated-button:active {
+  scale: 0.95;
+  box-shadow: 0 0 0 4px greenyellow;
+}
+
+.animated-button:hover .circle {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Estilo para el contenedor de logros */
+.achievements-container {
+  display: flex; /* Utiliza flexbox para alinear los elementos en una fila */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea si no caben en una sola fila */
+}
+
+.achievement-item {
+  position: relative;
+  display: inline-block; /* Alinea los elementos en línea */
+  margin: 10px; /* Añade un margen entre los elementos */
+}
+
+.achievement-photo {
+  width: 100px; /* Define el ancho deseado para las imágenes */
+  height: 100px; /* Define la altura deseada para las imágenes */
+  border-radius: 50%; /* Hace que las imágenes tengan bordes redondeados */
+  object-fit: cover; /* Ajusta el tamaño de la imagen para cubrir el contenedor */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega una ligera sombra a las imágenes */
+  transition: transform 0.3s ease; /* Agrega una transición suave al efecto hover */
+}
+
+.achievement-photo:hover {
+  transform: scale(1.1); /* Aumenta ligeramente el tamaño de la imagen al pasar el cursor */
+}
+
+.achievement-info {
+  position: absolute;
+  top: 110%; /* Coloca la información ligeramente debajo de la imagen */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px; /* Define la anchura deseada para el cuadro de información */
+  border: 1px solid #ccc;
+  padding: 20px; /* Aumenta el espacio interno para el contenido */
+  border-radius: 5px;
+  background-color: #080000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega una ligera sombra al contenedor de información */
+  opacity: 0; /* Inicialmente oculta la información */
+  z-index: 1; /* Eleva la información del logro por encima del resto del contenido */
+  transition: opacity 0.3s ease; /* Agrega una transición suave a la opacidad */
+}
+
+.achievement-item:hover .achievement-info {
+  opacity: 1; /* Muestra la información al pasar el cursor sobre el elemento */
+}

@@ -1,3 +1,91 @@
+.content{
+  width: 100%;
+  background: var(--ion-color-light);
+  height: 77.5vh;
+  color: var(--ion-color-light-contrast);
+  border-radius: 20px 20px 0 0;
+  margin-top: 5vh;
+  padding: 15px 0;
+
+  box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.35);
+  -webkit-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
+
+  overflow-y: auto;
+}
+
+ion-card{
+    border-radius: 15px;
+    padding: 10px;
+    min-height: 200px;
+    border: 1px solid  rgba(255, 255, 255, 0.168);
+}
+
+ion-card:hover{
+    cursor: pointer;
+    background: var(--ion-color-light);
+}
+
+.title{
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 10px;
+    line-height: 20px;
+}
+
+.task-btn{
+    width: 120px;
+}
+
 .empty{
     padding-top: 15vh;
 }
+
+.task-count {
+    color: rgb(248, 142, 56); 
+    font-weight: bold;
+  }
+  
+  
+  .toast-achievement {
+    font-weight: bold; /* Hace que el texto del título sea negrita */
+    font-size: 16px; /* Aumenta el tamaño del texto */
+  }
+
+  /* Estilo para la clase 'deporte' */
+.deporte {
+  color: #2a9d8f; /* Color verde azulado */
+  font-family: 'Georgia', serif; /* Tipo de letra Georgia */
+  text-decoration: underline; /* Subrayado */
+  font-size: 20px; /* Tamaño de la fuente */
+  font-weight: bolder; /* Más negrita */
+}
+
+/* Estilo para la clase 'cocina' */
+.cocina {
+  color: #e63946; /* Color rojo */
+  font-family: 'Georgia', serif; /* Tipo de letra Georgia */
+  text-decoration: underline; /* Subrayado */
+  font-size: 20px; /* Tamaño de la fuente */
+  font-weight: bolder; /* Más negrita */
+}
+
+/* Estilo para la clase 'trabajo' */
+.trabajo {
+  color: #1dbe0f; /* Color azul oscuro */
+  font-family: 'Georgia', serif; /* Tipo de letra Georgia */
+  text-decoration: underline; /* Subrayado */
+  font-size: 20px; /* Tamaño de la fuente */
+  font-weight: bolder; /* Más negrita */
+}
+
+/* Estilo para la clase 'otros' */
+.otros {
+  color: #f4a261; /* Color naranja */
+  font-family: 'Georgia', serif; /* Tipo de letra Georgia */
+  text-decoration: underline; /* Subrayado */
+  font-size: 20px; /* Tamaño de la fuente */
+  font-weight: bolder; /* Más negrita */
+}
+
+  

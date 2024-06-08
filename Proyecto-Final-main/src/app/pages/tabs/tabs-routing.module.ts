@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('./tareas-importantes/tareas-importantes.module').then( m => m.TareasImportantesPageModule)
       },
     ]
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
   }
   
 ];

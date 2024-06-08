@@ -1,4 +1,4 @@
-<ion-tabs>
+<ion-tabs *ngIf="!isAdmin">
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
       <ion-icon name="home-outline"></ion-icon>
@@ -10,6 +10,23 @@
     </ion-tab-button>
     <ion-tab-button tab="profile">
       <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+<ion-tabs *ngIf="isAdmin">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="cube"></ion-icon>
+      <ion-label>Tareas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="tareas-importantes">
+      <ion-icon name="people"></ion-icon>
+      <ion-label>Usuarios</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="profile">
+      <ion-icon name="person"></ion-icon>
       <ion-label>Perfil</ion-label>
     </ion-tab-button>
   </ion-tab-bar>

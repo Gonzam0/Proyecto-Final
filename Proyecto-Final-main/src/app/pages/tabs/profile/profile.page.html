@@ -1,19 +1,109 @@
-
 <ion-content>
-<app-header title="Perfil"></app-header>
+  <app-header title="Perfil"></app-header>
 
-<div class="content ion-text-center">
-
-  <ion-icon class="avatar" name="person-circle-outline" ></ion-icon>
-
-  <h2>{{user.name}}</h2>
-  <p>{{user.email}}
-    {{user.ciudad}}</p>
-
-
-  <ion-button (click)="signOut()">Cerrar Sesión
-    <ion-icon slot="end" name="log-out-outline"></ion-icon>
+  <ion-button class="top-right-button" color="danger" (click)="confirmDeleteUser()">
+    <ion-icon name="trash" slot="end"></ion-icon>
+    Borrar Cuenta
   </ion-button>
-  
-</div>
+
+  <div class="content ion-text-center">
+
+    <ion-avatar>
+      <img *ngIf="photo" [src]="photo" />
+      <ion-icon class="avatar" *ngIf="!photo" name="person-circle-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-button class="photo-btn" (click)="takePicture()" mode="ios" size="small" shape="round" ionBackdropDismiss>
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-button>
+
+    <ion-grid *ngIf="editing==false" class="user-info">
+
+      <h1 style="font-family: emoji; color: coral; font-style: italic;" class="ion-text-center">LOGROS</h1>
+      <p *ngIf="achievements.length == 0" style="color: goldenrod;">Actuamente no tienes logros</p>
+
+      <div class="achievements-container">
+        <ng-container *ngFor="let achievement of achievements">
+          <div class="achievement-item">
+            <img class="achievement-photo" [src]="achievement.photo" alt="Achievement Photo">
+            <div class="achievement-info">
+              <h4 style="font-family: ui-serif; color: goldenrod;">{{ achievement.title }}</h4>
+              <p style="font-family: emoji; font-size: medium; color: whitesmoke;">{{ achievement.description }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      
+
+
+      <ion-row>
+        <ion-col size="6">
+          <h3 class="info-label">Nombre:</h3>
+          <h6 class="info-value">{{ name }}</h6>
+        </ion-col>
+        <ion-col size="6">
+          <h3 class="info-label">Edad:</h3>
+          <h6 class="info-value">{{ age }}</h6>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <h3 class="info-label">Email:</h3>
+          <h6 class="info-value">{{ email }}</h6>
+        </ion-col>
+        <ion-col size="6">
+          <h3 class="info-label">Ciudad:</h3>
+          <h6 class="info-value">{{ city }}</h6>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <form *ngIf="editing==true" [formGroup]="userForm" (ngSubmit)="saveChanges()" class="form-container">
+      <ion-grid class="user-info">
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">Edad:</ion-label>
+              <ion-input formControlName="age" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">Ciudad:</ion-label>
+              <ion-input formControlName="city" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <button class="animated-button" type="submit">
+        <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+          </path>
+        </svg>
+        <span class="text">Guardar</span>
+        <span class="circle"></span>
+        <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+          </path>
+        </svg>
+      </button><br>
+
+      <ion-button (click)="cancel()" color="danger">Cancelar</ion-button>
+
+    </form>
+
+    <ion-button (click)="edit()" *ngIf="editing==false" color="warning">Editar Perfil
+      <ion-icon slot="end" name="create-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button (click)="signOut()" *ngIf="editing==false">Cerrar Sesión
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+    </ion-button>
+
+  </div>
 </ion-content>

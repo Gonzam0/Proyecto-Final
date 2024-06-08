@@ -1,3 +1,16 @@
+.content{
+    width: 100%;
+    height: auto; /* Altura automática por defecto */
+    background: var(--ion-color-light);
+    color: var(--ion-color-light-contrast);
+    border-radius: 20px 20px 0 0;
+    margin-top: 5vh;
+    padding: 15px 0;
+  
+    box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
+  }
 //====AJUSTA AL TAMAÑO DE LA PANTALLA WEB====
 @media(min-widht: 769px){
     form{

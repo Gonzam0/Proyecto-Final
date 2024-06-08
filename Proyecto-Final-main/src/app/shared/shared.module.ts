@@ -9,6 +9,7 @@ import { LogoComponent } from './component/logo/logo.component';
 
 import { NgCircleProgressModule} from 'ng-circle-progress';
 import { AddUpdateTaskComponent } from './component/add-update-task/add-update-task.component';
+import { AddUpdateReminderComponent } from './component/add-update-reminder/add-update-reminder.component';
 
 
 @NgModule({
@@ -17,13 +18,15 @@ import { AddUpdateTaskComponent } from './component/add-update-task/add-update-t
     CustomInputComponent,
     LogoComponent,
     AddUpdateTaskComponent,
+    AddUpdateReminderComponent
   ],
   exports: [
     HeaderComponent,
     CustomInputComponent,
     LogoComponent,
     NgCircleProgressModule,
-    AddUpdateTaskComponent
+    AddUpdateTaskComponent,
+    AddUpdateReminderComponent
   ],
   imports: [
     CommonModule,

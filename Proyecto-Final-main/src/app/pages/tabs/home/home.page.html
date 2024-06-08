@@ -1,14 +1,21 @@
 <ion-content>
   <app-header title="Tareas"></app-header>
 
-  <div class="content">
+  <div class="content" *ngIf="rol == 'basico'">
     <ion-searchbar [(ngModel)]="searchText" placeholder="Buscar tarea"></ion-searchbar>
-    
+
     <ion-button (click)="addOrUpdateTask()" class="ion-margin" mode="ios">
       Nueva tarea
       <ion-icon slot="end" name="add-circle-outline"></ion-icon>
     </ion-button>
-    
+
+    <ion-button (click)="addReminder()" class="ion-margin" mode="ios" color="warning" slot="end">
+      Recordatorios
+      <ion-icon slot="end" name="time-outline"></ion-icon>
+    </ion-button>
+
+    <h6 class="ion-margin">Total de Tareas Creadas: <span class="task-count">{{ tasks.length }}</span></h6>
+
     <ion-grid>
       <ion-row>
         <ion-col *ngFor="let task of filterTasks()" size-lg="6" size-md="6" size-sm="12" size="12">
@@ -16,17 +23,10 @@
             <ion-grid>
               <ion-row>
                 <ion-col class="ion-text-center" size-lg="5" size-md="5" size-sm="4" size="12">
-                  <circle-progress 
-                  [percent]="getPercentage(task)" 
-                  [radius]="65" 
-                  [outerStrokeWidth]="6" 
-                  [innerStrokeWidth]="4"
-                  [outerStrokeColor]="'#78C000'" 
-                  [innerStrokeColor]="'#C7E596'" 
-                  [animation]="true"
-                  [titleColor]="'var(--ion-color-dark)'"
-                  [subtitle]="'Progreso'"
-                  [animationDuration]="300">
+                  <circle-progress [percent]="getPercentage(task)" [radius]="65" [outerStrokeWidth]="6"
+                    [innerStrokeWidth]="4" [outerStrokeColor]="'#78C000'" [innerStrokeColor]="'#C7E596'"
+                    [animation]="true" [titleColor]="'var(--ion-color-dark)'" [subtitle]="'Progreso'"
+                    [animationDuration]="300">
                   </circle-progress>
                 </ion-col>
 
@@ -45,6 +45,22 @@
                       Eliminar tarea
                       <ion-icon slot="end" name="trash-outline"></ion-icon>
                     </ion-button>
+
+                    <div class="ion-text-center">
+                      <ion-button (click)="addFavorite(task)" class="task-btn" expand="task-btn" color="tertiary"
+                        size="small">
+                        Tarea Importante
+                        <ion-icon slot="end" name="star"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </div>
+
+                  <div class="ion-text-center">
+                    <h2 *ngIf="task.group=='1'" class="cocina">Cocina</h2>
+                    <h2 *ngIf="task.group=='2'" class="deporte">Deporte</h2>
+                    <h2 *ngIf="task.group=='3'" class="trabajo">Trabajo</h2>
+                    <h2 *ngIf="task.group=='4'" class="otros">Otro</h2>
+                    <h6>{{ task.date }}</h6>
                   </div>
                 </ion-col>
               </ion-row>
@@ -56,7 +72,7 @@
       <!--===== CARGANDO =====-->
       <ion-row *ngIf="loading">
         <ion-col *ngFor="let p of [1,1,1,1,1,1,1,1,1,1]" size-lg="6" size-md="6" size-sm="12" size="12">
-          <ion-card mode="ios"> 
+          <ion-card mode="ios">
             <div *ngFor="let item of [1,1,1,1]">
               <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
             </div>
@@ -75,5 +91,13 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </div>
+
+  <!--===== USUARIO BLOQUEADO =====-->
+  <div class="content ion-text-center" *ngIf="rol == 'bloqueado'" style="color: rgb(247, 140, 10);">
+    <ion-col class="empty" size="12">
+      <ion-icon name="alert"></ion-icon>
+      <h4>USUARIO BLOQUEADO</h4>
+    </ion-col>
   </div>
 </ion-content>
