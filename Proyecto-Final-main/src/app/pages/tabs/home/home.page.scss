@@ -1,16 +1,16 @@
-.content{
+.content {
   width: 100%;
-  height: auto; /* Altura automática por defecto */
+  height: auto;
   background: var(--ion-color-light);
   color: var(--ion-color-light-contrast);
   border-radius: 20px 20px 0 0;
   margin-top: 5vh;
   padding: 15px 0;
-
-  box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.35);
-  -webkit-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px -8px 40px -16px rgba(0,0,0,0.75);
+  box-shadow: 0px 50px 100px -25px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: 0px 50px 100px -25px rgba(0, 0, 0, 1); 
+  -moz-box-shadow: 0px 50px 100px -25px rgba(0, 0, 0, 1); 
 }
+
 
 ion-card{
     border-radius: 15px;

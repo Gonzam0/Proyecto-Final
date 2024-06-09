@@ -39,3 +39,19 @@
     </div>
   </div>
 </ion-content>
+
+<script>
+  function adjustHeight() {
+    const contentElement = document.querySelector('.content');
+    const maxHeight = window.innerHeight * 0.8; // 80vh
+
+    if (contentElement.scrollHeight > maxHeight) {
+      contentElement.style.height = 'auto';
+    } else {
+      contentElement.style.height = '80vh';
+    }
+  }
+
+  window.addEventListener('load', adjustHeight);
+  window.addEventListener('resize', adjustHeight);
+</script>
